@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Psychic Game</title>
+</head>
+<body>
+	<div id="container">
+		<h2>Psychic Game</h2>
+		<h3>Guess which letter am I thinking of.</h3>
+		<p>Wins: <span id="wins"></span></p>
+		<p>Losses: <span id="losses"></span></p>
+		<p>Guesses left: <span id="guessesLeft"></span></p>
+		<p>Letters guessed so far?</p> 
+		<span id="lettersGuessed"></span>
+	</div>
+
+<script type="text/javascript">
+	var letters = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'];
+
+	var guessesLeft = 9;
+	var wins = 0;
+	var losses = 0;
+	var lettersGuessed = [];
+
+	document.querySelector('#guessesLeft').innerText = guessesLeft;
+	document.querySelector('#wins').innerText = wins;
+	document.querySelector('#losses').innerText = losses;
+	document.querySelector('#lettersGuessed').innerText = lettersGuessed;
+
+	var randLet = Math.floor(Math.random()*letters.length);
+	randLet = letters[randLet];
+
+	function psychicGame(event){
+	var userLet = event.key;
+	lettersGuessed.push(userLet);
+	document.querySelector('#lettersGuessed').innerText = lettersGuessed;
+
+	if (randLet == userLet){
+	wins = wins + 1;
+	guessesLeft = 9;
+	lastGuess = lettersGuessed.length;
+	lettersGuessed.splice(0,lastGuess);
+	document.querySelector('#guessesLeft').innerText = guessesLeft;
+	document.querySelector('#wins').innerText = wins;
+	document.querySelector('#lettersGuessed').innerText = lettersGuessed;
+	randLet = Math.floor(Math.random()*letters.length);
+	randLet = letters[randLet];
+	} else {
+	guessesLeft = guessesLeft - 1;
+	document.querySelector('#guessesLeft').innerText = guessesLeft;
+	}
+	
+	if(guessesLeft == 0){
+	losses = losses + 1;
+	guessesLeft = 9;
+	lastGuess = lettersGuessed.length;
+	lettersGuessed.splice(0,lastGuess);
+	document.querySelector('#guessesLeft').innerText = guessesLeft;
+	document.querySelector('#losses').innerText = losses;
+	document.querySelector('#lettersGuessed').innerText = lettersGuessed;
+	randLet = Math.floor(Math.random()*letters.length);
+	randLet = letters[randLet];
+	}	
+	}
+
+document.onkeyup = psychicGame;
+
+</script>
+</body>
+</html>
